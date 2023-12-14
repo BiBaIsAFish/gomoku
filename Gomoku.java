@@ -16,6 +16,10 @@ public class Gomoku {
         while (!board.isGameOver()) {
             TestPlayer.play();
             TestPlayer2.board.mark(TestPlayer.lastMove);
+            board = TestPlayer.board.cloneBoard();
+            if (board.isGameOver()) {
+                break;
+            }
             TestPlayer2.play();
             TestPlayer.board.mark(TestPlayer2.lastMove);
             board = TestPlayer2.board.cloneBoard();
