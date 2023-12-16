@@ -1,92 +1,105 @@
-import java.util.*;
+// Source code is decompiled from a .class file using FernFlower decompiler.
+import java.util.ArrayList;
 
 public abstract class Player {
-    public Mark markTake;
-    public Board board;
-    public Move lastMove;
+   String playerName;
+   Mark markTake;
+   private Board board;
+   Move lastMove;
 
-    public Player() {
-        this.markTake = null;
-        this.lastMove = null;
-        this.board = null;
-    }
+   public Player() {
+      this.markTake = Mark.EMPTY;
+      this.lastMove = null;
+      this.playerName = "Default";
+      this.markTake = Mark.EMPTY;
+      this.board = null;
+   }
 
-    public void initPlayer(Mark m, Board b) {
-        this.markTake = m;
-        this.board = b;
-    }
+   public void initPlayer(String name, Mark mark, Board board) {
+      this.playerName = name;
+      this.markTake = mark;
+      this.board = board;
+   }
 
-    public Mark getMarkTaken() {
-        return this.markTake;
-    }
+   public String getPlayerName() {
+      return this.playerName;
+   }
 
-    public void setMarkTaken(Mark var1) {
-        this.markTake = var1;
-    }
+   public void setPlayerName(String var1) {
+      this.playerName = var1;
+   }
 
-    public Mark getCurrentMark() {
-        return this.board.getCurrentMark();
-    }
+   public Mark getMarkTaken() {
+      return this.markTake;
+   }
 
-    public void setBoard(Board var1) {
-        this.board = var1;
-    }
+   public void setMarkTaken(Mark var1) {
+      this.markTake = var1;
+   }
 
-    public Move getLastMove() {
-        return this.lastMove;
-    }
+   public Mark getCurrentMark() {
+      return this.board.getCurrentMark();
+   }
 
-    public boolean isGameOver() {
-        return this.board.isGameOver();
-    }
+   public void setBoard(Board var1) {
+      this.board = var1;
+   }
 
-    public boolean isGameOver(Board var1) {
-        return var1.isGameOver();
-    }
+   public BoardUI getBoardUI() {
+      return this.board.getBoardUI();
+   }
 
-    public Board getCurrentState() {
-        return this.board.cloneBoard();
-    }
+   public Move getLastMove() {
+      return this.lastMove;
+   }
 
-    public Mark getOppositeMark() {
-        return this.markTake.getOppositeMark();
-    }
+   public boolean isGameOver(Board var1) {
+      return var1.isGameOver();
+   }
 
-    public ArrayList<Move> getAvailableMoves() {
-        return this.getAvailableMoves(this.board);
-    }
+   public Board getCurrentState() {
+      return this.board.cloneBoard();
+   }
 
-    public ArrayList<Move> getAvailableMoves(Board var1) {
-        return var1.getAvailableMove();
-    }
+   public Mark getOppositeMark() {
+      return this.markTake.getOppositeMark();
+   }
 
-    public Mark getWinningMark(Board var1) {
-        return var1.getWinnerMark();
-    }
+   public ArrayList<Move> getAvailableMoves() {
+      return this.getAvailableMoves(this.board);
+   }
 
-    public void mark(Move var1) {
-        var1.setMark(this.markTake);
-        this.board.mark(var1);
-        this.lastMove = var1;
-    }
+   public ArrayList<Move> getAvailableMoves(Board var1) {
+      return var1.getAvailableMove();
+   }
 
-    public boolean isMyTurn() {
-        return this.board.getCurrentMark() == this.getMarkTaken();
-    }
+   public Mark getWinningMark(Board var1) {
+      return var1.getWinningMark();
+   }
 
-    public Board getNextState(Board var1, Move var2) {
-        Board var3 = var1.cloneBoard();
-        var2.setMark(var1.getCurrentMark());
-        var3.mark(var2);
-        return var3;
-    }
+   public void mark(Move var1) {
+      var1.setMark(this.markTake);
+      this.board.mark(var1);
+      this.lastMove = var1;
+   }
 
-    public Board getNextState(Board var1, Move var2, Mark var3) {
-        Board var4 = var1.cloneBoard();
-        var2.setMark(var3);
-        var4.mark(var2);
-        return var4;
-    }
+   public boolean isMyTurn() {
+      return this.board.getCurrentMark() == this.getMarkTaken();
+   }
 
-    public abstract void play();
+   public Board getNextState(Board var1, Move var2) {
+      Board var3 = var1.cloneBoard();
+      var2.setMark(var1.getCurrentMark());
+      var3.mark(var2);
+      return var3;
+   }
+
+   public Board getNextState(Board var1, Move var2, Mark var3) {
+      Board var4 = var1.cloneBoard();
+      var2.setMark(var3);
+      var4.mark(var2);
+      return var4;
+   }
+
+   public abstract void play();
 }

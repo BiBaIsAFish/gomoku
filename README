@@ -1,0 +1,14 @@
+要記得按最下面的 start 開始遊戲
+
+要改背景顏色在 
+- BoardUI.java
+    - public void drawGrid(Graphics graphics, int row, int col, Mark mark) {
+      - graphics.setColor(new Color(255, 141, 57));
+
+改格子大小
+- BoardUI.java
+  - int gridSize = 40;
+
+改 O 跟 X 的大小
+- BoardUI.java
+  - graphics.setFont(font.deriveFont(30.0F));

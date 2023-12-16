@@ -1,3 +1,2 @@
 javac *.java
-
-java Gomoku.java
+java Main.java
