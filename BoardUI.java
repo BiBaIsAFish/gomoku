@@ -108,8 +108,8 @@ public class BoardUI extends JPanel {
       }
    }
 
-   private void drawPointOnGraphics(Graphics graphics, int x, int y, int gridSize, int row, int col){
-      if (((row == 3 || row == 11) && (col == 3 || col == 11)) || (row == 7 && col == 7)){
+   private void drawPointOnGraphics(Graphics graphics, int x, int y, int gridSize, int row, int col) {
+      if (((row == 3 || row == 11) && (col == 3 || col == 11)) || (row == 7 && col == 7)) {
          graphics.fillOval(x + gridSize / 2 - 3, y + gridSize / 2 - 3, 6, 6);
       }
    }
@@ -128,11 +128,39 @@ public class BoardUI extends JPanel {
       graphics.fillOval(ovalX, ovalY, ovalSize, ovalSize);
    }
 
+   private void drawLocationStringOnGraphics(Graphics graphics, int x, int y, int size, int row, int col) {
+      FontMetrics fontMetrics = graphics.getFontMetrics();
+      Font font = fontMetrics.getFont();
+      graphics.setFont(font.deriveFont(25.0F));
+      graphics.setColor(Color.BLACK);
+      String positionString = "";
+
+      if (row == this.b.boardHeight - 1) {
+         positionString = String.valueOf((char) ('A' + col));
+         fontMetrics = graphics.getFontMetrics();
+         int stringX = x + (this.gridSize - fontMetrics.stringWidth(positionString)) / 2;
+         int stringY = y + (this.gridSize - (fontMetrics.getAscent() + fontMetrics.getDescent())) / 2
+               + fontMetrics.getAscent();
+         graphics.drawString(positionString, stringX, stringY + size);
+      }
+      if (col == 0) {
+         positionString = String.valueOf(this.b.boardHeight - row);
+         fontMetrics = graphics.getFontMetrics();
+         int stringX = x + (this.gridSize - fontMetrics.stringWidth(positionString)) / 2;
+         int stringY = y + (this.gridSize - (fontMetrics.getAscent() + fontMetrics.getDescent())) / 2
+               + fontMetrics.getAscent();
+         graphics.drawString(positionString, stringX - size, stringY);
+      }
+   }
+
    public void drawGrid(Graphics graphics, int row, int col, Mark mark) {
       this.startX = this.getLocation().x + (int) (this.getSize().getWidth() - (double) this.boardUIWidth) / 2;
       this.startY = this.getLocation().y + (int) (this.getSize().getHeight() - (double) this.boardUIHeight) / 2;
       int gridStartX = this.startX + col * this.gridSize;
       int gridStartY = this.startY + row * this.gridSize;
+
+      drawLocationStringOnGraphics(graphics, gridStartX, gridStartY, gridSize, row, col);
+
       graphics.setColor(new Color(255, 141, 57));
       graphics.fillRect(gridStartX, gridStartY, this.gridSize, this.gridSize);
       graphics.setColor(Color.BLACK);
