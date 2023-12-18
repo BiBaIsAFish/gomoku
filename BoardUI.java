@@ -1,3 +1,4 @@
+
 // Source code is decompiled from a .class file using FernFlower decompiler.
 import java.awt.Color;
 import java.awt.Font;
@@ -6,7 +7,15 @@ import java.awt.Graphics;
 import java.awt.Image;
 import javax.swing.JPanel;
 
+import java.util.*;
+
 public class BoardUI extends JPanel {
+
+   private static final int UP = 0;
+   private static final int DOWN = 1;
+   private static final int LEFT = 2;
+   private static final int RIGHT = 3;
+
    Board b;
    GameUI gui;
    int boardUIHeight;
@@ -33,11 +42,11 @@ public class BoardUI extends JPanel {
    }
 
    public int getBoardUIX() {
-      return this.getLocation().x + (int)(this.getSize().getWidth() - (double)this.boardUIWidth) / 2;
+      return this.getLocation().x + (int) (this.getSize().getWidth() - (double) this.boardUIWidth) / 2;
    }
 
    public int getBoardUIY() {
-      return this.getLocation().y + (int)(this.getSize().getHeight() - (double)this.boardUIHeight) / 2;
+      return this.getLocation().y + (int) (this.getSize().getHeight() - (double) this.boardUIHeight) / 2;
    }
 
    public int getGridSize() {
@@ -48,23 +57,74 @@ public class BoardUI extends JPanel {
       int w = this.b.getBoardWidth();
       int d = this.b.getBoardHeight();
 
-      for(int row = 0; row < w; ++row) {
-         for(int col = 0; col < d; ++col) {
+      for (int row = 0; row < w; ++row) {
+         for (int col = 0; col < d; ++col) {
             this.drawGrid(graphics, row, col, this.b.getMarkAt(row, col));
          }
       }
 
    }
 
+   private void drawLineOnDirections(Graphics graphics, int x, int y, int length, int direction) { 
+
+      int endX = x, endY = y;
+      switch (direction) {
+         case UP:
+            endY -= length;
+            break;
+         case DOWN:
+            endY += length;
+            break;
+         case LEFT:
+            endX -= length;
+            break;
+         case RIGHT:
+            endX += length;
+            break;
+         default:
+            break;
+      }
+      graphics.drawLine(x, y, endX, endY);
+   }
+
+   private void drawRectOnGraphics(Graphics graphics, int startX, int startY, int size, boolean atTop, boolean atBottom,
+         boolean atLeft, boolean atRight) {
+
+      int lineLen = size / 2;
+      int middleX = startX + lineLen;
+      int middleY = startY + lineLen;
+
+      if (!atTop){
+         drawLineOnDirections(graphics, middleX, middleY, lineLen, UP);
+      }
+      if (!atBottom){
+         drawLineOnDirections(graphics, middleX, middleY, lineLen, DOWN);
+      }
+      if (!atLeft){
+         drawLineOnDirections(graphics, middleX, middleY, lineLen, LEFT);
+      }
+      if (!atRight){
+         drawLineOnDirections(graphics, middleX, middleY, lineLen, RIGHT);
+      }
+   }
+
    public void drawGrid(Graphics graphics, int row, int col, Mark mark) {
-      this.startX = this.getLocation().x + (int)(this.getSize().getWidth() - (double)this.boardUIWidth) / 2;
-      this.startY = this.getLocation().y + (int)(this.getSize().getHeight() - (double)this.boardUIHeight) / 2;
+      this.startX = this.getLocation().x + (int) (this.getSize().getWidth() - (double) this.boardUIWidth) / 2;
+      this.startY = this.getLocation().y + (int) (this.getSize().getHeight() - (double) this.boardUIHeight) / 2;
       int gridStartX = this.startX + col * this.gridSize;
       int gridStartY = this.startY + row * this.gridSize;
       graphics.setColor(new Color(255, 141, 57));
-      graphics.fillRect(gridStartX + 1, gridStartY + 1, this.gridSize - 2, this.gridSize - 2);
+      graphics.fillRect(gridStartX, gridStartY, this.gridSize, this.gridSize);
       graphics.setColor(Color.BLACK);
-      graphics.drawRect(gridStartX, gridStartY, this.gridSize, this.gridSize);
+
+      boolean atTop = row == 0;
+      boolean atBottom = row == this.b.getBoardHeight() - 1;
+      boolean atLeft = col == 0;
+      boolean atRight = col == this.b.getBoardWidth() - 1;
+
+
+      drawRectOnGraphics(graphics, gridStartX, gridStartY, this.gridSize, atTop, atBottom, atLeft, atRight);
+
       if (mark != Mark.EMPTY) {
          FontMetrics fontMetrics = graphics.getFontMetrics();
          Font font = fontMetrics.getFont();
@@ -73,7 +133,8 @@ public class BoardUI extends JPanel {
          String markString = mark.toString();
          fontMetrics = graphics.getFontMetrics();
          int markStringX = gridStartX + (this.gridSize - fontMetrics.stringWidth(markString)) / 2;
-         int markStringY = gridStartY + (this.gridSize - (fontMetrics.getAscent() + fontMetrics.getDescent())) / 2 + fontMetrics.getAscent();
+         int markStringY = gridStartY + (this.gridSize - (fontMetrics.getAscent() + fontMetrics.getDescent())) / 2
+               + fontMetrics.getAscent();
          graphics.drawString(markString, markStringX, markStringY);
       }
    }
@@ -83,7 +144,7 @@ public class BoardUI extends JPanel {
    }
 
    public void paint(Graphics graphics) {
-      Image image = this.createImage((int)this.getSize().getWidth(), (int)this.getSize().getHeight());
+      Image image = this.createImage((int) this.getSize().getWidth(), (int) this.getSize().getHeight());
       Graphics imageGraphics = image.getGraphics();
       this.draw(imageGraphics);
       graphics.drawImage(image, 0, 0, this);
