@@ -65,7 +65,7 @@ public class BoardUI extends JPanel {
 
    }
 
-   private void drawLineOnDirections(Graphics graphics, int x, int y, int length, int direction) { 
+   private void drawLineOnDirections(Graphics graphics, int x, int y, int length, int direction) {
 
       int endX = x, endY = y;
       switch (direction) {
@@ -94,18 +94,32 @@ public class BoardUI extends JPanel {
       int middleX = startX + lineLen;
       int middleY = startY + lineLen;
 
-      if (!atTop){
+      if (!atTop) {
          drawLineOnDirections(graphics, middleX, middleY, lineLen, UP);
       }
-      if (!atBottom){
+      if (!atBottom) {
          drawLineOnDirections(graphics, middleX, middleY, lineLen, DOWN);
       }
-      if (!atLeft){
+      if (!atLeft) {
          drawLineOnDirections(graphics, middleX, middleY, lineLen, LEFT);
       }
-      if (!atRight){
+      if (!atRight) {
          drawLineOnDirections(graphics, middleX, middleY, lineLen, RIGHT);
       }
+   }
+
+   private void drawOvalOnGraphics(Graphics graphics, int startX, int startY, int size, boolean isBlack) {
+
+      if (isBlack) {
+         graphics.setColor(new Color(15, 15, 15));
+      } else {
+         graphics.setColor(new Color(240, 240, 240));
+      }
+      int ovalSize = (int) (size * 0.8);
+      int ovalX = startX + (size - ovalSize) / 2;
+      int ovalY = startY + (size - ovalSize) / 2;
+
+      graphics.fillOval(ovalX, ovalY, ovalSize, ovalSize);
    }
 
    public void drawGrid(Graphics graphics, int row, int col, Mark mark) {
@@ -122,20 +136,10 @@ public class BoardUI extends JPanel {
       boolean atLeft = col == 0;
       boolean atRight = col == this.b.getBoardWidth() - 1;
 
-
       drawRectOnGraphics(graphics, gridStartX, gridStartY, this.gridSize, atTop, atBottom, atLeft, atRight);
 
       if (mark != Mark.EMPTY) {
-         FontMetrics fontMetrics = graphics.getFontMetrics();
-         Font font = fontMetrics.getFont();
-         graphics.setFont(font.deriveFont(25.0F));
-         graphics.setColor(Color.BLACK);
-         String markString = mark.toString();
-         fontMetrics = graphics.getFontMetrics();
-         int markStringX = gridStartX + (this.gridSize - fontMetrics.stringWidth(markString)) / 2;
-         int markStringY = gridStartY + (this.gridSize - (fontMetrics.getAscent() + fontMetrics.getDescent())) / 2
-               + fontMetrics.getAscent();
-         graphics.drawString(markString, markStringX, markStringY);
+         drawOvalOnGraphics(graphics, gridStartX, gridStartY, gridSize, mark == Mark.CROSS);
       }
    }
 
