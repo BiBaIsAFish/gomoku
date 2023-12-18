@@ -108,7 +108,13 @@ public class BoardUI extends JPanel {
       }
    }
 
-   private void drawOvalOnGraphics(Graphics graphics, int startX, int startY, int size, boolean isBlack) {
+   private void drawPointOnGraphics(Graphics graphics, int x, int y, int gridSize, int row, int col){
+      if (((row == 3 || row == 11) && (col == 3 || col == 11)) || (row == 7 && col == 7)){
+         graphics.fillOval(x + gridSize / 2 - 3, y + gridSize / 2 - 3, 6, 6);
+      }
+   }
+
+   private void drawOvalOnGraphics(Graphics graphics, int x, int y, int size, boolean isBlack) {
 
       if (isBlack) {
          graphics.setColor(new Color(15, 15, 15));
@@ -116,8 +122,8 @@ public class BoardUI extends JPanel {
          graphics.setColor(new Color(240, 240, 240));
       }
       int ovalSize = (int) (size * 0.8);
-      int ovalX = startX + (size - ovalSize) / 2;
-      int ovalY = startY + (size - ovalSize) / 2;
+      int ovalX = x + (size - ovalSize) / 2;
+      int ovalY = y + (size - ovalSize) / 2;
 
       graphics.fillOval(ovalX, ovalY, ovalSize, ovalSize);
    }
@@ -137,6 +143,8 @@ public class BoardUI extends JPanel {
       boolean atRight = col == this.b.getBoardWidth() - 1;
 
       drawRectOnGraphics(graphics, gridStartX, gridStartY, this.gridSize, atTop, atBottom, atLeft, atRight);
+
+      drawPointOnGraphics(graphics, gridStartX, gridStartY, this.gridSize, row, col);
 
       if (mark != Mark.EMPTY) {
          drawOvalOnGraphics(graphics, gridStartX, gridStartY, gridSize, mark == Mark.CROSS);
