@@ -62,14 +62,14 @@ public class GameControl implements ActionListener, Runnable {
          var1 = this.gui.getPlayerClassName(0);
       }
 
-      this.players[0] = this.instantiatePlayer(var1, this.gui.getPlayerName(0), Mark.CROSS, this.b);
+      this.players[0] = this.instantiatePlayer(var1, this.gui.getPlayerName(0), Mark.BLACK, this.b);
       if (this.gui.getPlayerClassName(1) == null) {
          var1 = "GUIHumanPlayer";
       } else {
          var1 = this.gui.getPlayerClassName(1);
       }
 
-      this.players[1] = this.instantiatePlayer(var1, this.gui.getPlayerName(1), Mark.CIRCLE, this.b);
+      this.players[1] = this.instantiatePlayer(var1, this.gui.getPlayerName(1), Mark.WHITE, this.b);
       int var2 = 0;
 
       do {

@@ -1,7 +1,7 @@
 public enum Mark {
    EMPTY,
-   CIRCLE,
-   CROSS;
+   WHITE,
+   BLACK;
 
    private Mark() {
    }
@@ -10,9 +10,9 @@ public enum Mark {
       switch (this) {
          case EMPTY:
             return " ";
-         case CIRCLE:
+         case WHITE:
             return "O";
-         case CROSS:
+         case BLACK:
             return "X";
          default:
             return " ";
@@ -23,7 +23,7 @@ public enum Mark {
       if (this == EMPTY) {
          return EMPTY;
       } else {
-         return this == CIRCLE ? CROSS : CIRCLE;
+         return this == WHITE ? BLACK : WHITE;
       }
    }
 }

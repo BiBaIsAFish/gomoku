@@ -21,7 +21,7 @@ public class GUIHumanPlayer extends Player implements MouseListener {
       if (this.getCurrentMark() == this.getMarkTaken()) {
          this.m = new Move(var1, var2);
          this.m.setMark(this.getMarkTaken());
-         ArrayList var3 = this.getAvailableMoves();
+         ArrayList<Move> var3 = this.getAvailableMoves();
          if (var3.contains(this.m)) {
             this.mark(this.m);
             this.keepGoingStatus = false;
@@ -50,7 +50,7 @@ public class GUIHumanPlayer extends Player implements MouseListener {
 
    public Move getNextMove(Board var1) {
       Move var2 = null;
-      ArrayList var3 = var1.getAvailableMove();
+      ArrayList<Move> var3 = var1.getAvailableMove();
 
       while(!this.notified || this.m == null || !var3.contains(this.m)) {
          try {

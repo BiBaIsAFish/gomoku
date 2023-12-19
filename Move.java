@@ -53,8 +53,7 @@ public class Move {
    }
 
    public int hashCode() {
-      boolean var1 = false;
-      int var2 = this.pos.x * 10 + this.pos.y;
-      return var2;
+      int code = this.pos.x * 10 + this.pos.y;
+      return code;
    }
 }

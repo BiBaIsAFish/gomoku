@@ -67,7 +67,7 @@ public class BoardUI extends JPanel {
 
    private void drawOrder(Graphics graphics, Move move, int order) {
 
-      if (move.getMark() != Mark.CROSS) {
+      if (move.getMark() != Mark.BLACK) {
          graphics.setColor(new Color(15, 15, 15));
       } else {
          graphics.setColor(new Color(240, 240, 240));
@@ -204,7 +204,7 @@ public class BoardUI extends JPanel {
       drawPointOnGraphics(graphics, gridStartX, gridStartY, this.gridSize, row, col);
 
       if (mark != Mark.EMPTY) {
-         drawOvalOnGraphics(graphics, gridStartX, gridStartY, gridSize, mark == Mark.CROSS);
+         drawOvalOnGraphics(graphics, gridStartX, gridStartY, gridSize, mark == Mark.BLACK);
       }
    }
 

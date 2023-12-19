@@ -1,6 +1,5 @@
 // Source code is decompiled from a .class file using FernFlower decompiler.
 import java.awt.BorderLayout;
-import java.awt.Color;
 import java.awt.GridLayout;
 import java.awt.Point;
 import java.awt.event.MouseEvent;

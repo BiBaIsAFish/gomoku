@@ -27,7 +27,7 @@ public class Board {
       }
 
       this.gameStatus = IN_PLAY;
-      this.currentMark = Mark.CROSS;
+      this.currentMark = Mark.BLACK;
    }
 
    public int getBoardStatus() {
