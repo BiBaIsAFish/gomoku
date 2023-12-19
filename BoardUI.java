@@ -7,8 +7,6 @@ import java.awt.Graphics;
 import java.awt.Image;
 import javax.swing.JPanel;
 
-import java.util.*;
-
 public class BoardUI extends JPanel {
 
    private static final int UP = 0;
@@ -114,7 +112,7 @@ public class BoardUI extends JPanel {
       }
    }
 
-   private void drawOvalOnGraphics(Graphics graphics, int x, int y, int size, boolean isBlack) {
+   private void drawPieceOnGraphics(Graphics graphics, int x, int y, int size, boolean isBlack) {
 
       if (isBlack) {
          graphics.setColor(new Color(15, 15, 15));
@@ -175,7 +173,7 @@ public class BoardUI extends JPanel {
       drawPointOnGraphics(graphics, gridStartX, gridStartY, this.gridSize, row, col);
 
       if (mark != Mark.EMPTY) {
-         drawOvalOnGraphics(graphics, gridStartX, gridStartY, gridSize, mark == Mark.CROSS);
+         drawPieceOnGraphics(graphics, gridStartX, gridStartY, gridSize, mark == Mark.CROSS);
       }
    }
 
