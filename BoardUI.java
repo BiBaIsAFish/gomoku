@@ -60,7 +60,38 @@ public class BoardUI extends JPanel {
             this.drawGrid(graphics, row, col, this.b.getMarkAt(row, col));
          }
       }
+      for (int order = 0; order < this.b.history.size(); order++) {
+         this.drawOrder(graphics, this.b.history.get(order), order + 1);
+      }
+   }
 
+   private void drawOrder(Graphics graphics, Move move, int order) {
+
+      if (move.getMark() != Mark.CROSS) {
+         graphics.setColor(new Color(15, 15, 15));
+      } else {
+         graphics.setColor(new Color(240, 240, 240));
+      }
+
+      int row = move.getPosition().x;
+      int col = move.getPosition().y;
+
+      this.startX = this.getLocation().x + (int) (this.getSize().getWidth() - (double) this.boardUIWidth) / 2;
+      this.startY = this.getLocation().y + (int) (this.getSize().getHeight() - (double) this.boardUIHeight) / 2;
+      int x = this.startX + col * this.gridSize;
+      int y = this.startY + row * this.gridSize;
+
+      FontMetrics fontMetrics = graphics.getFontMetrics();
+      Font font = fontMetrics.getFont().deriveFont(Font.BOLD);
+      graphics.setFont(font.deriveFont(15.0F));
+      String positionString = "";
+
+      positionString = String.valueOf(order);
+      fontMetrics = graphics.getFontMetrics();
+      int stringX = x + (this.gridSize - fontMetrics.stringWidth(positionString)) / 2;
+      int stringY = y + (this.gridSize - (fontMetrics.getAscent() + fontMetrics.getDescent())) / 2
+            + fontMetrics.getAscent();
+      graphics.drawString(positionString, stringX, stringY);
    }
 
    private void drawLineOnDirections(Graphics graphics, int x, int y, int length, int direction) {
@@ -112,7 +143,7 @@ public class BoardUI extends JPanel {
       }
    }
 
-   private void drawPieceOnGraphics(Graphics graphics, int x, int y, int size, boolean isBlack) {
+   private void drawOvalOnGraphics(Graphics graphics, int x, int y, int size, boolean isBlack) {
 
       if (isBlack) {
          graphics.setColor(new Color(15, 15, 15));
@@ -173,7 +204,7 @@ public class BoardUI extends JPanel {
       drawPointOnGraphics(graphics, gridStartX, gridStartY, this.gridSize, row, col);
 
       if (mark != Mark.EMPTY) {
-         drawPieceOnGraphics(graphics, gridStartX, gridStartY, gridSize, mark == Mark.CROSS);
+         drawOvalOnGraphics(graphics, gridStartX, gridStartY, gridSize, mark == Mark.CROSS);
       }
    }
 
