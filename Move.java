@@ -40,7 +40,7 @@ public class Move {
    }
 
    public String toString() {
-      return new String("(" + this.pos.x + ", " + this.pos.y + ")");
+      return new String("(" + String.valueOf((char) ('A' + this.pos.y)) + ", " + (15 - this.pos.x) + ")");
    }
 
    public boolean equals(Object var1) {

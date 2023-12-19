@@ -11,9 +11,9 @@ public enum Mark {
          case EMPTY:
             return " ";
          case WHITE:
-            return "O";
+            return "white";
          case BLACK:
-            return "X";
+            return "black";
          default:
             return " ";
       }
