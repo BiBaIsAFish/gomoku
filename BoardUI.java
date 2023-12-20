@@ -1,10 +1,15 @@
 
 // Source code is decompiled from a .class file using FernFlower decompiler.
+import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.FontMetrics;
 import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.awt.Image;
+import java.awt.Point;
+import java.awt.geom.Line2D;
+
 import javax.swing.JPanel;
 
 public class BoardUI extends JPanel {
@@ -60,9 +65,32 @@ public class BoardUI extends JPanel {
             this.drawGrid(graphics, row, col, this.b.getMarkAt(row, col));
          }
       }
+      if (this.b.winningMark != null) {
+         drawWinningLine(graphics, this.b.winningPoint, this.b.winningDiff, this.b.winningLength);
+      }
       for (int order = 0; order < this.b.history.size(); order++) {
          this.drawOrder(graphics, this.b.history.get(order), order + 1);
       }
+   }
+
+   private void drawWinningLine(Graphics graphics, Point point, Point diff, int length) {
+      int row = point.x;
+      int col = point.y;
+
+      this.startX = this.getLocation().x + (int) (this.getSize().getWidth() - (double) this.boardUIWidth) / 2;
+      this.startY = this.getLocation().y + (int) (this.getSize().getHeight() - (double) this.boardUIHeight) / 2;
+      int sX = this.startX + col * this.gridSize + this.gridSize / 2;
+      int sY = this.startY + row * this.gridSize + this.gridSize / 2;
+
+      int eX = sX + diff.x * (length - 1) * this.gridSize;
+      int eY = sY + diff.y * (length - 1) * this.gridSize;
+
+      graphics.setColor(new Color(0, 255, 0, 144));
+
+      Graphics2D g2 = (Graphics2D) graphics;
+      g2.setStroke(new BasicStroke(10));
+      g2.draw(new Line2D.Float(sX, sY, eX, eY));
+
    }
 
    private void drawOrder(Graphics graphics, Move move, int order) {

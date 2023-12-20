@@ -1,5 +1,6 @@
 
 // Source code is decompiled from a .class file using FernFlower decompiler.
+import java.awt.Point;
 import java.awt.event.MouseListener;
 import java.util.ArrayList;
 
@@ -16,6 +17,10 @@ public class Board {
    Mark[][] grid;
    ArrayList<Move> history = new ArrayList<>();
    Mark currentMark;
+
+   Point winningPoint = null;
+   Point winningDiff = null;
+   int winningLength;
 
    public Board() {
       this.grid = new Mark[this.boardHeight][this.boardWidth];
@@ -149,6 +154,9 @@ public class Board {
       if (consecutiveNum >= this.winLength) {
          isWin = true;
          this.winningMark = mark;
+         this.winningPoint = new Point(row - rowDiff, col - colDiff);
+         this.winningDiff = new Point(-1 * colDiff, -1 * rowDiff);
+         this.winningLength = consecutiveNum;
       }
 
       return isWin;
