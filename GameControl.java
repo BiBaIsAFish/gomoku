@@ -55,33 +55,33 @@ public class GameControl implements ActionListener, Runnable {
 
    public void play() {
       this.players = new Player[2];
-      String var1;
+      String className;
       if (this.gui.getPlayerClassName(0) == null) {
-         var1 = "GUIHumanPlayer";
+         className = "GUIHumanPlayer";
       } else {
-         var1 = this.gui.getPlayerClassName(0);
+         className = this.gui.getPlayerClassName(0);
       }
 
-      this.players[0] = this.instantiatePlayer(var1, this.gui.getPlayerName(0), Mark.BLACK, this.b);
+      this.players[0] = this.instantiatePlayer(className, this.gui.getPlayerName(0), Mark.BLACK, this.b);
       if (this.gui.getPlayerClassName(1) == null) {
-         var1 = "GUIHumanPlayer";
+         className = "GUIHumanPlayer";
       } else {
-         var1 = this.gui.getPlayerClassName(1);
+         className = this.gui.getPlayerClassName(1);
       }
 
-      this.players[1] = this.instantiatePlayer(var1, this.gui.getPlayerName(1), Mark.WHITE, this.b);
-      int var2 = 0;
+      this.players[1] = this.instantiatePlayer(className, this.gui.getPlayerName(1), Mark.WHITE, this.b);
+      int currentPlayerIndex = 0;
 
       do {
-         this.gui.setMessage("Now is player: " + this.players[var2].getPlayerName() + "'s turn, who takes " + this.players[var2].getMarkTaken());
-         this.players[var2].play();
-         this.gui.setMessage("Player: " + this.players[var2].getPlayerName() + " \u4f7f\u7528 (" + this.players[var2].getMarkTaken() + ") \u4e0b\u5728\u4f4d\u7f6e " + this.players[var2].getLastMove() + "\u8655");
-         var2 = (var2 + 1) % 2;
+         this.gui.setMessage("Now is player: " + this.players[currentPlayerIndex].getPlayerName() + "'s turn, who takes " + this.players[currentPlayerIndex].getMarkTaken());
+         this.players[currentPlayerIndex].play();
+         this.gui.setMessage("Player: " + this.players[currentPlayerIndex].getPlayerName() + " \u4f7f\u7528 (" + this.players[currentPlayerIndex].getMarkTaken() + ") \u4e0b\u5728\u4f4d\u7f6e " + this.players[currentPlayerIndex].getLastMove() + "\u8655");
+         currentPlayerIndex = (currentPlayerIndex + 1) % 2;
       } while(!this.b.isGameOver());
 
       switch (this.b.getBoardStatus()) {
          case 0:
-            this.gui.setMessage("Winner is: " + this.players[(var2 + 1) % 2].getPlayerName() + " who takes " + this.players[(var2 + 1) % 2].getMarkTaken());
+            this.gui.setMessage("Winner is: " + this.players[(currentPlayerIndex + 1) % 2].getPlayerName() + " who takes " + this.players[(currentPlayerIndex + 1) % 2].getMarkTaken());
             break;
          case 2:
             this.gui.setMessage("\u96d9\u65b9\u5e73\u624b");

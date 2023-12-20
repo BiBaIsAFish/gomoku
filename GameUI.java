@@ -35,7 +35,7 @@ public class GameUI extends JFrame implements MouseListener {
       this.defaultPlayerClassName[1] = "GUIHumanPlayer";
       this.initializeUI();
       this.setPlayerClassName(this.defaultPlayerClassName);
-      this.setSize(1200, 900);
+      this.setExtendedState(JFrame.MAXIMIZED_BOTH);
       this.setVisible(true);
       this.updateThread = new UpdateThread(this);
       this.updateThread.start();
