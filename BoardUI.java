@@ -67,10 +67,26 @@ public class BoardUI extends JPanel {
       }
       if (this.b.winningMark != null) {
          drawWinningLine(graphics, this.b.winningPoint, this.b.winningDiff, this.b.winningLength);
+         drawLastPiece(graphics, this.b.history.get(this.b.history.size() - 1));
       }
       for (int order = 0; order < this.b.history.size(); order++) {
          this.drawOrder(graphics, this.b.history.get(order), order + 1);
       }
+   }
+
+   private void drawLastPiece(Graphics graphics, Move lastMove){
+      int row = lastMove.getPosition().x;
+      int col = lastMove.getPosition().y;
+      this.startX = this.getLocation().x + (int) (this.getSize().getWidth() - (double) this.boardUIWidth) / 2;
+      this.startY = this.getLocation().y + (int) (this.getSize().getHeight() - (double) this.boardUIHeight) / 2;
+      int x = this.startX + col * this.gridSize;
+      int y = this.startY + row * this.gridSize;
+      int ovalSize = (int) (this.gridSize * 0.8);
+      int ovalX = x + (this.gridSize - ovalSize) / 2;
+      int ovalY = y + (this.gridSize - ovalSize) / 2;
+
+      graphics.setColor(Color.RED);
+      graphics.drawOval(ovalX, ovalY, ovalSize, ovalSize);
    }
 
    private void drawWinningLine(Graphics graphics, Point point, Point diff, int length) {
@@ -90,6 +106,7 @@ public class BoardUI extends JPanel {
       Graphics2D g2 = (Graphics2D) graphics;
       g2.setStroke(new BasicStroke(10));
       g2.draw(new Line2D.Float(sX, sY, eX, eY));
+      g2.setStroke(new BasicStroke(5));
 
    }
 
