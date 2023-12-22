@@ -67,14 +67,21 @@ public class BoardUI extends JPanel {
       }
       if (this.b.winningMark != null) {
          drawWinningLine(graphics, this.b.winningPoint, this.b.winningDiff, this.b.winningLength);
+      }
+
+      if (this.b.history.size() != 0) {
          drawLastPiece(graphics, this.b.history.get(this.b.history.size() - 1));
       }
+
       for (int order = 0; order < this.b.history.size(); order++) {
          this.drawOrder(graphics, this.b.history.get(order), order + 1);
       }
    }
 
-   private void drawLastPiece(Graphics graphics, Move lastMove){
+   private void drawLastPiece(Graphics graphics, Move lastMove) {
+      Graphics2D g2 = (Graphics2D) graphics;
+
+      g2.setStroke(new BasicStroke(5));
       int row = lastMove.getPosition().x;
       int col = lastMove.getPosition().y;
       this.startX = this.getLocation().x + (int) (this.getSize().getWidth() - (double) this.boardUIWidth) / 2;
@@ -106,7 +113,6 @@ public class BoardUI extends JPanel {
       Graphics2D g2 = (Graphics2D) graphics;
       g2.setStroke(new BasicStroke(10));
       g2.draw(new Line2D.Float(sX, sY, eX, eY));
-      g2.setStroke(new BasicStroke(5));
 
    }
 
