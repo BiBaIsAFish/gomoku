@@ -54,6 +54,7 @@ public class GameControl implements ActionListener, Runnable {
    }
 
    public void play() {
+      Server.start();
       this.players = new Player[2];
       String className;
       if (this.gui.getPlayerClassName(0) == null) {

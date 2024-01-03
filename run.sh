@@ -1,4 +1,1 @@
-#!/bin/bash
-
-javac *.java
-java Main.java
+node server.js | ./gomoku.exe | ./run-ui.sh

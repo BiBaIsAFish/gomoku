@@ -81,6 +81,7 @@ public abstract class Player {
       var1.setMark(this.markTake);
       this.board.mark(var1);
       this.lastMove = var1;
+      Server.req(var1.toString());
    }
 
    public boolean isMyTurn() {
